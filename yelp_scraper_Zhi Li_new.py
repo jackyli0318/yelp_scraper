@@ -11,67 +11,6 @@ import time
 import requests
 
 
-def getCritic(review):
-    criticChunk = review.find('a',{'href':re.compile('/critic/')})
-    if criticChunk and str(criticChunk).strip():
-        critic = criticChunk.text
-    else:
-        critic = 'NA'
-    
-    critic = str(critic).strip()
-    return critic
-
-
-def getRating(review):
-    ratingChunk = review.find('div', {'class':re.compile('review_icon icon')})
-    attributes = ratingChunk.attrs
-    if attributes and str(attributes).strip():
-        results = attributes.get('class')
-        try:
-            rating = results[3]
-        except IndexError:
-            rating = 'NA'
-    else:
-        rating = 'NA'
-    
-    rating = str(rating).strip()
-    return rating
-
-
-def getSource(review):
-    sourceChunk = review.find('a',{'href':re.compile('/source-')})
-    if sourceChunk and str(sourceChunk).strip():
-        source = sourceChunk.text
-    else:
-        source = 'NA'
-    
-    source = str(source).strip()
-    return source
-        
-
-
-def getDate(review):
-    dateChunk = review.find('div',{'class':'review_date subtle small'})
-    if dateChunk and str(dateChunk).strip(): 
-        date = dateChunk.text
-    else:
-        date = 'NA'
-    
-    date = str(date).strip()
-    return date
-
-
-def getTextLen(review):
-    content = review.find('div',{'class':'the_review'})
-    if content and str(content).strip(): 
-        length = len(content.text)
-    else:
-        length = 'NA'
-    
-    length = str(length).strip()
-    return length
-
-
 def getLink(link):
     source = link.get('href')
     if '/biz' in source:
@@ -90,7 +29,7 @@ def run_japan(url):
     fw=open('japanese.txt','w') 
 #    fw.write("Link\t\tRating\t\tSource\t\tDate\t\tTextLen\n")
 	
-    for p in range(0,pageNum): 
+    for p in range(0,pageNum+1): 
 
         print ('page',p)
         html=None
@@ -150,7 +89,7 @@ def run_indian(url):
     fw=open('indian.txt','w') 
 #    fw.write("Link\t\tRating\t\tSource\t\tDate\t\tTextLen\n")
 	
-    for p in range(0,pageNum): 
+    for p in range(0,pageNum+1): 
 
         print ('page',p)
         html=None
@@ -209,7 +148,7 @@ def run_usa(url):
     fw=open('american.txt','w') 
 #    fw.write("Link\t\tRating\t\tSource\t\tDate\t\tTextLen\n")
 	
-    for p in range(0,pageNum): 
+    for p in range(0,pageNum+1): 
 
         print ('page',p)
         html=None
@@ -279,7 +218,7 @@ def get_review_rating(tag):
 
 
 def jp_get_tags(url):
-    pageNum=0
+    pageNum=10
 
     fw=open('jp_review.txt','w') 
     fw.write("Rating\t\tReview\t\tSource\n")
@@ -337,6 +276,127 @@ def jp_get_tags(url):
 
     fw.close()
 
+def in_get_tags(url):
+    pageNum=10
+
+    fw=open('in_review.txt','w') 
+    fw.write("Rating\t\tReview\t\tSource\n")
+	
+    for p in range(0,pageNum+1): 
+
+        print ('page',p)
+        html=None
+
+        
+        pageLink=url+"?start="+str(p*10) 
+		
+        for i in range(5):
+            try:
+                
+                response=requests.get(pageLink,headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36', })
+                html=response.content 
+                break 
+            except Exception as e:
+                print ('failed attempt',i)
+                time.sleep(2) 
+				
+		
+        if not html:continue 
+        
+        soup = BeautifulSoup(html.decode('ascii', 'ignore'),'lxml') 
+
+#        reviews=soup.findAll('div', {'class':re.compile('review_table_row')}) 
+        tags=soup.findAll('div', {'itemprop': "review"})
+        print("reading data...\n")
+        for tag in tags:
+
+#            critic = getCritic(review)
+#            rating = getRating(review)
+#            source = getSource(review)
+#            date = getDate(review)
+#            length = getTextLen(review)
+            
+#            print(critic)
+#            print(rating)
+#            print(source)
+#            print(date)
+#            print(length + '\n')
+            
+#            fw.write(critic + "\t" + rating + "\t" + source + "\t" + date + "\t" + length + "\n" )
+#            print (link)
+            rating, review = get_review_rating(tag)
+#            print (source)
+            if review == 'NA':
+                continue
+#            fw.write(rating + "\t\t" + review + "\t\t" + pageLink + "\n" )
+            fw.write(rating + "\n" + review + "\n" + pageLink + "\n\n" )
+		
+            time.sleep(2)	
+
+    fw.close()
+    
+
+def usa_get_tags(url):
+    pageNum=10
+
+    fw=open('usa_review.txt','w') 
+    fw.write("Rating\t\tReview\t\tSource\n")
+	
+    for p in range(0,pageNum+1): 
+
+        print ('page',p)
+        html=None
+
+        
+        pageLink=url+"?start="+str(p*10) 
+		
+        for i in range(5):
+            try:
+                
+                response=requests.get(pageLink,headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36', })
+                html=response.content 
+                break 
+            except Exception as e:
+                print ('failed attempt',i)
+                time.sleep(2) 
+				
+		
+        if not html:continue 
+        
+        soup = BeautifulSoup(html.decode('ascii', 'ignore'),'lxml') 
+
+#        reviews=soup.findAll('div', {'class':re.compile('review_table_row')}) 
+        tags=soup.findAll('div', {'itemprop': "review"})
+        print("reading data...\n")
+        for tag in tags:
+
+#            critic = getCritic(review)
+#            rating = getRating(review)
+#            source = getSource(review)
+#            date = getDate(review)
+#            length = getTextLen(review)
+            
+#            print(critic)
+#            print(rating)
+#            print(source)
+#            print(date)
+#            print(length + '\n')
+            
+#            fw.write(critic + "\t" + rating + "\t" + source + "\t" + date + "\t" + length + "\n" )
+#            print (link)
+            rating, review = get_review_rating(tag)
+#            print (source)
+            if review == 'NA':
+                continue
+#            fw.write(rating + "\t\t" + review + "\t\t" + pageLink + "\n" )
+            fw.write(rating + "\n" + review + "\n" + pageLink + "\n\n" )
+		
+            time.sleep(2)	
+
+    fw.close()
+    
+    
+
 def get_link_list(filename):
     f = open(filename, 'r')
     
@@ -349,7 +409,6 @@ def get_link_list(filename):
     return linklst
 
 if __name__=='__main__':
-<<<<<<< HEAD
     #Japanese list link
 #    jp_url='https://www.yelp.com/search?find_desc=japanese+restaurant&find_loc=Chicago&start='
 #    run_japan(jp_url)
@@ -361,31 +420,20 @@ if __name__=='__main__':
 #    run_usa(usa_url)
     
     jp_linklst = get_link_list("japanese.txt")
-#    in_linklst = get_link_list("indian.txt")
-#    usa_linklst = get_link_list("american.txt")
+    in_linklst = get_link_list("indian.txt")
+    usa_linklst = get_link_list("american.txt")
     
-#    for link in jp_linklst:
-#        jp_get_tags(link)
-    jp_get_tags(jp_linklst[0])
-#    for link in in_linklst:
-#        jp_get_tags(link)
+    for link in jp_linklst:
+        jp_get_tags(link)
+#    jp_get_tags(jp_linklst[0])
+    for link in in_linklst:
+        in_get_tags(link)
 #        
-#    for link in usa_linklst:
-#        jp_get_tags(link)
+    for link in usa_linklst:
+        usa_get_tags(link)
     
     
 
-=======
-#	Japanese list link
-    jp_url='https://www.yelp.com/search?find_desc=japanese+restaurant&find_loc=Chicago&start='
-    run_japan(jp_url)
-# 	Indian list link
-    in_url='https://www.yelp.com/search?find_desc=Indian+restaurant&find_loc=Chicago&start='
-    run_indian(in_url)
-# 	American list link
-    usa_url='https://www.yelp.com/search?find_desc=American+restaurant&find_loc=Chicago&start='
-    run_usa(usa_url)
->>>>>>> 3563a6939f70d31e64e8307b018ee99faacb2da1
     
     
     
