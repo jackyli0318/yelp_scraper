@@ -11,6 +11,7 @@ import time
 import requests
 
 
+
 def getLink(link):
     source = link.get('href')
     if '/biz' in source:
@@ -217,10 +218,10 @@ def get_review_rating(tag):
     return rating, review
 
 
-def jp_get_tags(url):
+def jp_get_tags(url,PROCESS):
     pageNum=10
 
-    fw=open('jp_review.txt','w') 
+    fw=open('jp_review.txt','a+') 
     fw.write("Rating\t\tReview\t\tSource\n")
 	
     for p in range(0,pageNum+1): 
@@ -271,15 +272,18 @@ def jp_get_tags(url):
                 continue
 #            fw.write(rating + "\t\t" + review + "\t\t" + pageLink + "\n" )
             fw.write(rating + "\n" + review + "\n" + pageLink + "\n\n" )
-		
-            time.sleep(2)	
+            PROCESS = PROCESS + 1
+            print(PROCESS)
+        
+#            time.sleep(2)	
 
     fw.close()
 
-def in_get_tags(url):
+def in_get_tags(url, PROCESS):
+    
     pageNum=10
 
-    fw=open('in_review.txt','w') 
+    fw=open('in_review.txt','a+') 
     fw.write("Rating\t\tReview\t\tSource\n")
 	
     for p in range(0,pageNum+1): 
@@ -324,22 +328,27 @@ def in_get_tags(url):
             
 #            fw.write(critic + "\t" + rating + "\t" + source + "\t" + date + "\t" + length + "\n" )
 #            print (link)
+            
             rating, review = get_review_rating(tag)
 #            print (source)
             if review == 'NA':
                 continue
 #            fw.write(rating + "\t\t" + review + "\t\t" + pageLink + "\n" )
             fw.write(rating + "\n" + review + "\n" + pageLink + "\n\n" )
+            
+            PROCESS = PROCESS + 1
+            print(PROCESS)
 		
-            time.sleep(2)	
+#            time.sleep(2)	
 
     fw.close()
+    return (PROCESS)
     
 
-def usa_get_tags(url):
+def usa_get_tags(url,PROCESS):
     pageNum=10
 
-    fw=open('usa_review.txt','w') 
+    fw=open('usa_review.txt','a+') 
     fw.write("Rating\t\tReview\t\tSource\n")
 	
     for p in range(0,pageNum+1): 
@@ -390,8 +399,9 @@ def usa_get_tags(url):
                 continue
 #            fw.write(rating + "\t\t" + review + "\t\t" + pageLink + "\n" )
             fw.write(rating + "\n" + review + "\n" + pageLink + "\n\n" )
-		
-            time.sleep(2)	
+            PROCESS = PROCESS + 1
+            print(PROCESS)
+            time.sleep(0.1)	
 
     fw.close()
     
@@ -410,27 +420,31 @@ def get_link_list(filename):
 
 if __name__=='__main__':
     #Japanese list link
-    jp_url='https://www.yelp.com/search?find_desc=japanese+restaurant&find_loc=Chicago&start='
-    run_japan(jp_url)
-#    
-    in_url='https://www.yelp.com/search?find_desc=Indian+restaurant&find_loc=Chicago&start='
-    run_indian(in_url)
-#    
-    usa_url='https://www.yelp.com/search?find_desc=American+restaurant&find_loc=Chicago&start='
-    run_usa(usa_url)
+#    jp_url='https://www.yelp.com/search?find_desc=japanese+restaurant&find_loc=Chicago&start='
+#    run_japan(jp_url)
+##    
+#    in_url='https://www.yelp.com/search?find_desc=Indian+restaurant&find_loc=Chicago&start='
+#    run_indian(in_url)
+##    
+#    usa_url='https://www.yelp.com/search?find_desc=American+restaurant&find_loc=Chicago&start='
+#    run_usa(usa_url)
     
-    jp_linklst = get_link_list("japanese.txt")
-    in_linklst = get_link_list("indian.txt")
-    usa_linklst = get_link_list("american.txt")
+#    jp_linklst = get_link_list("japanese.txt")
     
-    for link in jp_linklst:
-        jp_get_tags(link)
+#    for link in jp_linklst:
+#        jp_get_tags(link)
 #    jp_get_tags(jp_linklst[0])
-    for link in in_linklst:
-        in_get_tags(link)
-#        
+
+#    in_linklst = get_link_list("indian.txt")
+#    for link in in_linklst[0:5]:
+#    PROCESS=0
+#    for link in in_linklst:
+#        PROCESS = in_get_tags(link,PROCESS)
+##        
+    PROCESS=0
+    usa_linklst = get_link_list("american.txt")
     for link in usa_linklst:
-        usa_get_tags(link)
+        usa_get_tags(link,PROCESS)
     
     
 
