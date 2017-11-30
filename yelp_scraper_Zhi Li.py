@@ -89,7 +89,7 @@ def run_japan(url):
     fw=open('japanese.txt','w') 
 #    fw.write("Link\t\tRating\t\tSource\t\tDate\t\tTextLen\n")
 	
-    for p in range(1,pageNum+1): 
+    for p in range(0,pageNum): 
 
         print ('page',p)
         html=None
@@ -148,7 +148,7 @@ def run_indian(url):
     fw=open('indian.txt','w') 
 #    fw.write("Link\t\tRating\t\tSource\t\tDate\t\tTextLen\n")
 	
-    for p in range(1,pageNum+1): 
+    for p in range(0,pageNum): 
 
         print ('page',p)
         html=None
@@ -207,7 +207,7 @@ def run_usa(url):
     fw=open('american.txt','w') 
 #    fw.write("Link\t\tRating\t\tSource\t\tDate\t\tTextLen\n")
 	
-    for p in range(1,pageNum+1): 
+    for p in range(0,pageNum): 
 
         print ('page',p)
         html=None
