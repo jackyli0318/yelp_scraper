@@ -1,0 +1,5 @@
+https://www.yelp.com/adredir?ad_business_id=iuFSSw6VYxgcnUmVDqwQ0Q&campaign_id=En7yOt21SstkXHFs9QkraQ&click_origin=search_results&placement=above_search&redirect_url=https%3A%2F%2Fwww.yelp.com%2Fbiz%2Fmacku-sushi-chicago&request_id=b27fa9025d29d768&signature=8c67cffcea73227703ae02e8f824d1dfd230cd8f8ebc2037c32d37ad9b8f62ef&slot=0
+https://www.yelp.com/adredir?ad_business_id=mWDZVQxJ5p6aNp7ipa6DEQ&campaign_id=jY1ngYJnxRK_GwGw3Ahgkg&click_origin=search_results&placement=above_search&redirect_url=https%3A%2F%2Fwww.yelp.com%2Fbiz%2Fsumo-sushi-and-hibachi-chicago&request_id=b27fa9025d29d768&signature=f3a5bb56151372500b082dce2a615897eedf9215428d9752bef30bef8c674d87&slot=1
+https://www.yelp.com/biz/kai-zan-chicago?osq=japanese+restaurant
+https://www.yelp.com/biz/kizuki-ramen-and-izakaya-chicago?osq=japanese+restaurant
+https://www.yelp.com/biz/kai-sushi-chicago-2?osq=japanese+restaurant
