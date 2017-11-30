@@ -410,14 +410,14 @@ def get_link_list(filename):
 
 if __name__=='__main__':
     #Japanese list link
-#    jp_url='https://www.yelp.com/search?find_desc=japanese+restaurant&find_loc=Chicago&start='
-#    run_japan(jp_url)
+    jp_url='https://www.yelp.com/search?find_desc=japanese+restaurant&find_loc=Chicago&start='
+    run_japan(jp_url)
 #    
-#    in_url='https://www.yelp.com/search?find_desc=Indian+restaurant&find_loc=Chicago&start='
-#    run_indian(in_url)
+    in_url='https://www.yelp.com/search?find_desc=Indian+restaurant&find_loc=Chicago&start='
+    run_indian(in_url)
 #    
-#    usa_url='https://www.yelp.com/search?find_desc=American+restaurant&find_loc=Chicago&start='
-#    run_usa(usa_url)
+    usa_url='https://www.yelp.com/search?find_desc=American+restaurant&find_loc=Chicago&start='
+    run_usa(usa_url)
     
     jp_linklst = get_link_list("japanese.txt")
     in_linklst = get_link_list("indian.txt")
