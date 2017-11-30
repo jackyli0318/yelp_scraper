@@ -89,7 +89,7 @@ def run_japan(url):
     fw=open('japanese.txt','w') 
 #    fw.write("Link\t\tRating\t\tSource\t\tDate\t\tTextLen\n")
 	
-    for p in range(0,pageNum+1): 
+    for p in range(1,pageNum+1): 
 
         print ('page',p)
         html=None
@@ -148,7 +148,7 @@ def run_indian(url):
     fw=open('indian.txt','w') 
 #    fw.write("Link\t\tRating\t\tSource\t\tDate\t\tTextLen\n")
 	
-    for p in range(0,pageNum+1): 
+    for p in range(1,pageNum+1): 
 
         print ('page',p)
         html=None
@@ -207,7 +207,7 @@ def run_usa(url):
     fw=open('american.txt','w') 
 #    fw.write("Link\t\tRating\t\tSource\t\tDate\t\tTextLen\n")
 	
-    for p in range(0,pageNum+1): 
+    for p in range(1,pageNum+1): 
 
         print ('page',p)
         html=None
@@ -260,13 +260,13 @@ def run_usa(url):
     fw.close()
 
 if __name__=='__main__':
-    #Japanese list link
-#    jp_url='https://www.yelp.com/search?find_desc=japanese+restaurant&find_loc=Chicago&start='
-#    run_japan(jp_url)
-    
-#    in_url='https://www.yelp.com/search?find_desc=Indian+restaurant&find_loc=Chicago&start='
-#    run_indian(in_url)
-    
+#	Japanese list link
+    jp_url='https://www.yelp.com/search?find_desc=japanese+restaurant&find_loc=Chicago&start='
+    run_japan(jp_url)
+# 	Indian list link
+    in_url='https://www.yelp.com/search?find_desc=Indian+restaurant&find_loc=Chicago&start='
+    run_indian(in_url)
+# 	American list link
     usa_url='https://www.yelp.com/search?find_desc=American+restaurant&find_loc=Chicago&start='
     run_usa(usa_url)
     
