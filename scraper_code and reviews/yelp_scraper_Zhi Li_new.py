@@ -11,7 +11,7 @@ import time
 import requests
 
 
-
+# Find and return the link from a html tag
 def getLink(link):
     source = link.get('href')
     if '/biz' in source:
@@ -23,12 +23,12 @@ def getLink(link):
     return source
 
 
+# Find all <a> tags that contain links of Japanese restaurants and output the links into the file.
 def run_japan(url):
 
     pageNum=10
 
     fw=open('japanese.txt','w') 
-#    fw.write("Link\t\tRating\t\tSource\t\tDate\t\tTextLen\n")
 	
     for p in range(0,pageNum+1): 
 
@@ -53,29 +53,29 @@ def run_japan(url):
         
         soup = BeautifulSoup(html.decode('ascii', 'ignore'),'lxml') 
 
-#        reviews=soup.findAll('div', {'class':re.compile('review_table_row')}) 
         links=soup.findAll('a', {'class':re.compile('biz-name js-analytics-click')})
         print("reading data...\n")
         for link in links:
 
 
             source = getLink(link)
-#            print (source)
+            
             if source == 'NA':
                 continue
-#            source = source.split('?osq=japanese+restaurant')[0].strip()
+            
             fw.write(source + "\n" ) 
 		
             time.sleep(0.1)	
 
     fw.close()
     
+    
+# Find all <a> tags that contain links of Indian restaurants and output the links into the file.
 def run_indian(url):
 
     pageNum=10
 
     fw=open('indian.txt','w') 
-#    fw.write("Link\t\tRating\t\tSource\t\tDate\t\tTextLen\n")
 	
     for p in range(0,pageNum+1): 
 
@@ -100,14 +100,14 @@ def run_indian(url):
         
         soup = BeautifulSoup(html.decode('ascii', 'ignore'),'lxml') 
 
-#        reviews=soup.findAll('div', {'class':re.compile('review_table_row')}) 
+
         links=soup.findAll('a', {'class':re.compile('biz-name js-analytics-click')})
         print("reading data...\n")
         for link in links:
 
 
             source = getLink(link)
-#            print (source)
+            
             if source == 'NA':
                 continue
             fw.write(source + "\n" ) 
@@ -116,12 +116,14 @@ def run_indian(url):
 
     fw.close()
     
+    
+# Find all <a> tags that contain links of American restaurants and output the links into the file.
 def run_usa(url):
 
     pageNum=10
 
     fw=open('american.txt','w') 
-#    fw.write("Link\t\tRating\t\tSource\t\tDate\t\tTextLen\n")
+    
 	
     for p in range(0,pageNum+1): 
 
@@ -146,13 +148,13 @@ def run_usa(url):
         
         soup = BeautifulSoup(html.decode('ascii', 'ignore'),'lxml') 
 
-#        reviews=soup.findAll('div', {'class':re.compile('review_table_row')}) 
+
         links=soup.findAll('a', {'class':re.compile('biz-name js-analytics-click')})
         print("reading data...\n")
         for link in links:
 
             source = getLink(link)
-#            print (source)
+            
             if source == 'NA':
                 continue
             fw.write(source + "\n" ) 
@@ -162,6 +164,7 @@ def run_usa(url):
     fw.close()
     
 
+# Find and get the review and rating of the given tag and return them
 def get_review_rating(tag):
     ratingChunk = tag.find('meta',{'itemprop': "ratingValue"})
     rating = ratingChunk.get('content')
@@ -178,11 +181,12 @@ def get_review_rating(tag):
     return rating, review
 
 
+# Find all <div> tags that contain reviews of Japanese restaurants and output the review into the file.
 def jp_get_tags(url,PROCESS):
     pageNum=10
 
     fw=open('jp_review.txt','a+') 
-#    fw.write("Rating\t\tReview\t\tSource\n")
+    
 	
     for p in range(0,pageNum+1): 
 
@@ -207,16 +211,16 @@ def jp_get_tags(url,PROCESS):
         
         soup = BeautifulSoup(html.decode('ascii', 'ignore'),'lxml') 
 
-#        reviews=soup.findAll('div', {'class':re.compile('review_table_row')}) 
+
         tags=soup.findAll('div', {'itemprop': "review"})
         print("reading data...\n")
         for tag in tags:
 
             rating, review = get_review_rating(tag)
-#            print (source)
+            
             if review == 'NA':
                 continue
-#            fw.write(rating + "\t\t" + review + "\t\t" + pageLink + "\n" )
+            
             fw.write(rating + "\n" + review + "\n" + pageLink + "\n\n" )
             PROCESS = PROCESS + 1
             print(PROCESS)
@@ -226,12 +230,14 @@ def jp_get_tags(url,PROCESS):
     fw.close()
     return (PROCESS)
 
+
+# Find all <div> tags that contain reviews of Japanese restaurants and output the review into the file.
 def in_get_tags(url, PROCESS):
     
     pageNum=10
 
     fw=open('in_review.txt','a+') 
-#    fw.write("Rating\t\tReview\t\tSource\n")
+    
 	
     for p in range(0,pageNum+1): 
 
@@ -256,16 +262,16 @@ def in_get_tags(url, PROCESS):
         
         soup = BeautifulSoup(html.decode('ascii', 'ignore'),'lxml') 
 
-#        reviews=soup.findAll('div', {'class':re.compile('review_table_row')}) 
+
         tags=soup.findAll('div', {'itemprop': "review"})
         print("reading data...\n")
         for tag in tags:
 
             rating, review = get_review_rating(tag)
-#            print (source)
+            
             if review == 'NA':
                 continue
-#            fw.write(rating + "\t\t" + review + "\t\t" + pageLink + "\n" )
+            
             fw.write(rating + "\n" + review + "\n" + pageLink + "\n\n" )
             
             PROCESS = PROCESS + 1
@@ -277,11 +283,12 @@ def in_get_tags(url, PROCESS):
     return (PROCESS)
     
 
+# Find all <div> tags that contain reviews of Japanese restaurants and output the review into the file.
 def usa_get_tags(url,PROCESS):
     pageNum=10
 
     fw=open('usa_review.txt','a+') 
-#    fw.write("Rating\t\tReview\t\tSource\n")
+    
 	
     for p in range(0,pageNum+1): 
 
@@ -306,30 +313,16 @@ def usa_get_tags(url,PROCESS):
         
         soup = BeautifulSoup(html.decode('ascii', 'ignore'),'lxml') 
 
-#        reviews=soup.findAll('div', {'class':re.compile('review_table_row')}) 
+
         tags=soup.findAll('div', {'itemprop': "review"})
         print("reading data...\n")
         for tag in tags:
 
-#            critic = getCritic(review)
-#            rating = getRating(review)
-#            source = getSource(review)
-#            date = getDate(review)
-#            length = getTextLen(review)
-            
-#            print(critic)
-#            print(rating)
-#            print(source)
-#            print(date)
-#            print(length + '\n')
-            
-#            fw.write(critic + "\t" + rating + "\t" + source + "\t" + date + "\t" + length + "\n" )
-#            print (link)
             rating, review = get_review_rating(tag)
-#            print (source)
+            
             if review == 'NA':
                 continue
-#            fw.write(rating + "\t\t" + review + "\t\t" + pageLink + "\n" )
+            
             fw.write(rating + "\n" + review + "\n" + pageLink + "\n\n" )
             PROCESS = PROCESS + 1
             print(PROCESS)
@@ -339,7 +332,7 @@ def usa_get_tags(url,PROCESS):
     return (PROCESS)
     
     
-
+# Get the link from the given file and return a list of links
 def get_link_list(filename):
     f = open(filename, 'r')
     
@@ -351,34 +344,43 @@ def get_link_list(filename):
         f.close()
     return linklst
 
+
 if __name__=='__main__':
-    #Japanese list link
+    # Get Japanese restaurants links
     jp_url='https://www.yelp.com/search?find_desc=japanese+restaurant&find_loc=Chicago&start='
     run_japan(jp_url)
-#    
+    # Get Indian restaurants links
     in_url='https://www.yelp.com/search?find_desc=Indian+restaurant&find_loc=Chicago&start='
     run_indian(in_url)
-#    
+    # Get American restaurants links    
     usa_url='https://www.yelp.com/search?find_desc=American+restaurant&find_loc=Chicago&start='
     run_usa(usa_url)
     
-    
-    PROCESS=0
+    # Getting reviews of each restaurant 
+    PROCESS1=0
+    # collect all the Japanese Restaurants links from the file 
     jp_linklst = get_link_list("japanese.txt")
-    for link in jp_linklst[0:60]:
-        PROCESS = jp_get_tags(link, PROCESS)
+    for link in jp_linklst:
+        PROCESS1 = jp_get_tags(link, PROCESS1)
 
-    
-    PROCESS=0
+
+    PROCESS2=0
+    # collect all the Indian Restaurants links from the file 
     in_linklst = get_link_list("indian.txt")
-    for link in in_linklst[0:60]:
-        PROCESS = in_get_tags(link,PROCESS)
+    for link in in_linklst:
+        PROCESS2 = in_get_tags(link,PROCESS2)
         
-    PROCESS=0
-    usa_linklst = get_link_list("american.txt")
-    for link in usa_linklst[0:60]:
-        PROCESS = usa_get_tags(link,PROCESS)
     
+    PROCESS3=0
+    # collect all the American Restaurants links from the file 
+    usa_linklst = get_link_list("american.txt")
+    for link in usa_linklst:
+        PROCESS3 = usa_get_tags(link,PROCESS3)
+    
+    # Print the reviews that each function has collected
+    print (PROCESS1)
+    print (PROCESS2)
+    print (PROCESS3)
     
 
     
